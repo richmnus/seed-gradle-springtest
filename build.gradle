@@ -1,14 +1,34 @@
-apply plugin: 'java'
-apply plugin: 'java-library' // Works with Java plugin, this app can be a library that exports an API
+task wrapper(type: Wrapper) {
+    // At least v4 for SpotBugs
+    gradleVersion = '4.5'
+}
+
+apply plugin: 'java' // Standard Java plugin
+apply plugin: 'java-library' // Works with Java plugin, for a library app that exports an API
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'jacoco'
+apply plugin: "com.github.spotbugs"
 
+// Added for SpotBugs plugin
+buildscript {
+    repositories {
+        maven {
+        url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "gradle.plugin.com.github.spotbugs:gradlePlugin:1.6.0"
+    }
+}
+
+// Jacoco plugin
 jacoco {
     toolVersion = "0.7.9"
     reportsDir = file("$buildDir/reports/jacoco")
 }
 
+// Jacoco plugin
 jacocoTestReport {
     additionalSourceDirs = files(sourceSets.main.allJava.srcDirs)
     reports {
@@ -47,6 +67,7 @@ test {
     systemProperties 'property': 'value'
 }
 
+// Jacoco plugin
 test {
     finalizedBy jacocoTestReport
     jacoco {
