@@ -22,6 +22,24 @@ buildscript {
     }
 }
 
+// SpotBugs plugin config
+spotbugs {
+    toolVersion = '3.1.1'
+    sourceSets = [sourceSets.main]
+    ignoreFailures = true
+    reportsDir = file("$project.buildDir/reports/spotbugs")
+    effort = 'default'
+    reportLevel = 'medium'
+}
+
+// SpotBugs plugin config
+tasks.withType(com.github.spotbugs.SpotBugsTask) {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}
+
 // Jacoco plugin config
 jacoco {
     toolVersion = "0.7.9"
