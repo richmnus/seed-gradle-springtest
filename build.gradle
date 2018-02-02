@@ -22,13 +22,13 @@ buildscript {
     }
 }
 
-// Jacoco plugin
+// Jacoco plugin config
 jacoco {
     toolVersion = "0.7.9"
     reportsDir = file("$buildDir/reports/jacoco")
 }
 
-// Jacoco plugin
+// Jacoco plugin config
 jacocoTestReport {
     additionalSourceDirs = files(sourceSets.main.allJava.srcDirs)
     reports {
