@@ -1,61 +1,10 @@
 task wrapper(type: Wrapper) {
-    // At least v4 for SpotBugs
     gradleVersion = '4.5'
 }
 
 apply plugin: 'java' // Standard Java plugin
 apply plugin: 'java-library' // Works with Java plugin, for a library app that exports an API
 apply plugin: 'eclipse'
-apply plugin: 'idea'
-apply plugin: 'jacoco'
-apply plugin: "com.github.spotbugs"
-
-// Added for SpotBugs plugin
-buildscript {
-    repositories {
-        maven {
-        url "https://plugins.gradle.org/m2/"
-        }
-    }
-    dependencies {
-        classpath "gradle.plugin.com.github.spotbugs:gradlePlugin:1.6.0"
-    }
-}
-
-// SpotBugs plugin config
-spotbugs {
-    toolVersion = '3.1.1'
-    sourceSets = [sourceSets.main]
-    ignoreFailures = true
-    reportsDir = file('$project.buildDir/reports/spotbugs')
-    effort = 'default'
-    reportLevel = 'medium'
-}
-
-// SpotBugs plugin config
-tasks.withType(com.github.spotbugs.SpotBugsTask) {
-    reports {
-        xml.enabled = false
-        html.enabled = true
-    }
-}
-
-// Jacoco plugin config
-jacoco {
-    toolVersion = "0.7.9"
-    reportsDir = file("$buildDir/reports/jacoco")
-}
-
-// Jacoco plugin config
-jacocoTestReport {
-    additionalSourceDirs = files(sourceSets.main.allJava.srcDirs)
-    reports {
-        xml.enabled false
-        csv.enabled false
-        html.destination "${buildDir}/reports/jacoco"
-    }
-    executionData = files("${buildDir}/jacoco/test.exec")
-}
 
 sourceCompatibility = 1.8
 version = '1.0'
@@ -83,16 +32,6 @@ dependencies {
 
 test {
     systemProperties 'property': 'value'
-}
-
-// Jacoco plugin
-test {
-    finalizedBy jacocoTestReport
-    jacoco {
-        append = false
-        destinationFile = file("$buildDir/jacoco/test.exec")
-        // classDumpFile = file("$buildDir/jacoco/classpathdumps")
-    }
 }
 
 uploadArchives {
