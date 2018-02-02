@@ -27,7 +27,7 @@ spotbugs {
     toolVersion = '3.1.1'
     sourceSets = [sourceSets.main]
     ignoreFailures = true
-    reportsDir = file("$project.buildDir/reports/spotbugs")
+    reportsDir = file('$project.buildDir/reports/spotbugs')
     effort = 'default'
     reportLevel = 'medium'
 }
