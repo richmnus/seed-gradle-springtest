@@ -5,6 +5,17 @@ task wrapper(type: Wrapper) {
 apply plugin: 'java' // Standard Java plugin
 apply plugin: 'java-library' // Works with Java plugin, for a library app that exports an API
 apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+// Added for Spring Boot plugin
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath('org.springframework.boot:spring-boot-gradle-plugin:1.5.10.RELEASE')
+    }
+}
 
 sourceCompatibility = 1.8
 version = '1.0'
@@ -24,10 +35,11 @@ dependencies {
     api 'org.apache.commons:commons-collections4:4.1'
 
     // java-library plugin: used internally, not exposed to consumers on their own compile classpath
-    implementation 'com.google.code.findbugs:findbugs-annotations:3.0.1'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 
-    // java and java-library plugins
+    // java-library plugin
     testImplementation 'junit:junit:4.12'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 test {
